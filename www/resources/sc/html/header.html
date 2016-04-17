@@ -1,0 +1,96 @@
+<div class="header-container" ng-show="rootShow">
+    <div class="header-relative">
+        <header id="top" role="banner">
+            <div class="header-absolute" id="header-absolute"></div>
+            <div class="button-block">
+                <a class="nav-btn" id="nav-open-btn" href="#nav"></a>
+            </div>
+            <div class="block">
+                <h1 class="block-title"><a class="brand" ng-href="/">PEEP</a></h1>
+            </div>
+            <nav id="nav" role="navigation">
+                <div class="music-nav-block">
+                    <div class="music-nav">
+                        <ul>
+                            <li ng-class="{'is-active': {{isActive('/trending')}}}">
+                                <a ng-href="#/trending">Trending</a>
+                            </li>
+                            <!-- <li ng-class="{'is-active': {{isActive('/new')}}}">
+                                <a ng-href="#/new">New</a>
+                            </li> -->
+                            <li ng-class="{'is-active': {{isActive('/trap')}}}">
+                                <a ng-href="#/trap">Trap</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/country')}}}">
+                                <a ng-href="#/country">Country</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/pop')}}}">
+                                <a ng-href="#/pop">Pop</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/indie')}}}">
+                                <a ng-href="#/indie">Indie</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/rock')}}}">
+                                <a ng-href="#/rock">Rock</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/dancehall')}}}">
+                                <a href="#/dancehall">Dancehall</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/hiphop')}}}">
+                                <a href="#/hiphop">Hip-Hop</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/electronic')}}}">
+                                <a href="#/electronic">Electronic</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/deephouse')}}}">
+                                <a href="#/deephouse">DeepHouse</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/dubstep')}}}">
+                                <a href="#/dubstep">Dubstep</a>
+                            </li>
+                            <li ng-class="{'is-active': {{isActive('/house')}}}">
+                                <a href="#/house">House</a>
+                            </li>
+                            <!-- <li ng-class="{'is-active': {{isActive('/rbsoul')}}}">
+                                <a href="#/rbsoul">R&B&Soul</a>
+                            </li> -->
+                            <!-- <li ng-class="{'is-active': {{isActive('/jazzblues')}}}">
+                                <a href="#/jazzblues">Jazz&Blues</a>
+                            </li> -->
+                            <!-- <li ng-class="{'is-active': {{isActive('/remix')}}}">
+                                <a ng-href="#/remix">Remix</a>
+                            </li> -->
+                            <!-- <li ng-if="isLoggedIn == 1" ng-class="{'is-active': {{isActive('/favorites')}}}">
+                                <a ng-href="#/favorites/{{globals.currentUser.user.username}}">My Favorites</a>
+                            </li> -->
+                            <li>
+                                <form class="navbar-form-expanded navbar-form search" role="search" ng-submit="search()">
+                                    <div class="input-group search-group">
+                                        <input type="text" class="form-control search-input" data-width="200px" data-width-expanded="200px" placeholder="Search" ng-model="searchTerm">
+                                    </div>
+                                </form>
+                            </li>
+                            <!-- <li class="nav-float-right" ng-if="isLoggedIn == 1">
+                                <a ng-href="#/logout">Logout</a>
+                            </li> -->
+                            <!-- <li class="nav-float-right" ng-if="isLoggedIn == 0" ng-class="{'is-active': {{isActive('/login')}}}">
+                                <a ng-href="#/login">Login</a>
+                            </li> -->
+                            <!-- <li class="nav-float-right" ng-if="isLoggedIn == 0" ng-class="{'is-active': {{isActive('/join')}}}">
+                                <a ng-href="#/join">Join</a>
+                            </li> -->
+                            <!-- <li class="nav-float-right lastfm" ng-if="isLoggedIn == 1 && !globals.currentUser.user.lastfm_active">
+                                <a ng-href="http://www.last.fm/api/auth/?api_key=3da6a9e960e8fd8a6fd1b78d12db9df4&cb=http://rising.fm"><span class="off"></span>Last.FM</a>
+                            </li> -->
+                            <!-- <li class="nav-float-right lastfm" ng-if="isLoggedIn == 1 && globals.currentUser.user.lastfm_active">
+                                <a ng-click="disconnectLastFM()" ng-href="#"><span class="on"></span>Last.FM</a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+        </header>
+
+    </div>
+</div>

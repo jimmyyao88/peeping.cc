@@ -1,0 +1,31 @@
+<div class="tracks-container">
+    <div class="join-container">
+        <div class="join-block">
+            <h2 class="join-title">Make an account</h2>
+            <form name="form" ng-submit="join()" role="form">
+                <div class="flash-message" ng-if="flash">
+                    <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+                    <label for="email">Email</label>
+                    <input maxlength="50" type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
+                    <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                    <label for="username">Username</label>
+                    <input ng-Maxlength="15" maxlength="15" type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" required />
+                    <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                    <label for="password">Password</label>
+                    <input maxlength="128" ng-Minlength="6" type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required />
+                    <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Make my account</button>
+                    <a href="/" class="btn btn-link">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

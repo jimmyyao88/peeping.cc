@@ -1,0 +1,19 @@
+{
+  "name": "sc4c",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Jimmy"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

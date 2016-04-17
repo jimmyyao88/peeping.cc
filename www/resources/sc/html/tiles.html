@@ -1,0 +1,45 @@
+<div class="tracks-container" ng-show="show">
+    <div class="ad-container" style="display:none">
+        <!-- <div class="ad-element">
+            <img src="http://i.imgur.com/2wAic6v.jpg" />
+        </div> -->
+    </div>
+    <div ng-repeat="song in songs" on-finish-render="ngRepeatFinished" class="tile" >
+        <div class="track" id="{{song.id}}" data-index="{{$index+1}}">
+            <img src="{{song.artwork_url}}" class="tile-artwork">
+            <div class="info-container">
+                <div class="track-info">
+                    <div class="track-number">
+                        {{($index+1) > 9 ? ($index+1): "0" + ($index+1)}}
+                    </div>
+                    <div class="track-artist">
+                        {{song.user.username}}
+                    </div>
+                    <div class="track-name">
+                        <a id="track-name" href="/track/{{song.internal_url}}">{{song.title}}</a>
+                    </div>
+                    <div id="favorite-track" class="{{'favorite-track ' + song.favorited}}" ng-click="favorite(song.id, $index)">
+
+                    </div>
+                </div>
+            </div>
+            <div class="overlay"></div>
+            <div class="play-container" add-song="song" play-pause-toggle music-player="play">
+            </div>
+            <div class="track-icons">
+                <a class="soundcloud-link" target="_blank" href="{{song.permalink_url}}"><img class="soundcloud-logo"  src="https://w.soundcloud.com/icon/assets/images/orange_transparent_64-94fc761.png"/></a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="tracks.length == 0">
+        <div class="nothing-found-container" after-render="ngRepeatFinished">
+            <p class="nothing-found-text">No results, so here's a GIF instead...</p>
+            <img src="{{img}}" />
+        </div>
+    </div>
+    <div ng-if="tracks.length % 100 == 0 && isActive('/favorites')">
+        <div ng-click="loadMore()" class="load-more" after-render="ngRepeatFinished">
+            <p class="load-more-text">LOAD MORE</p>
+        </div>
+    </div>
+</div>
