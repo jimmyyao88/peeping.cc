@@ -164,6 +164,17 @@
             };
         }
     }
+    angular.module('app.core').directive('cancelRedProgress',function(){
+      return {
+        scope: false,
+        link: function(scope, elem){
+          elem.on('click',function(){
+            console.log('clicked');
+            $('.progress-bar-container').css('background-color','#fff');
+          });
+        }
+      };
+    });
 
 
     angular.module('app.core').controller('LoginController', LoginController);
@@ -249,6 +260,7 @@
                 }
             });
         };
+
 
         $scope.isActive = function (path) {
             if(path == '/trending' && $location.path() === '/'){

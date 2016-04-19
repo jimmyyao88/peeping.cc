@@ -1,8 +1,8 @@
 <div class="tracks-container" ng-show="show">
-    <div class="ad-container" style="display:none">
-        <!-- <div class="ad-element">
-            <img src="http://i.imgur.com/2wAic6v.jpg" />
-        </div> -->
+    <div class="ad-container">
+      <snap-drawer>
+        I'm in a drawer!
+      </snap-drawer>
     </div>
     <div ng-repeat="song in songs" on-finish-render="ngRepeatFinished" class="tile" >
         <div class="track" id="{{song.id}}" data-index="{{$index+1}}">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="overlay"></div>
-            <div class="play-container" add-song="song" play-pause-toggle music-player="play">
+            <div class="play-container" add-song="song" play-pause-toggle music-player="play" cancel-red-progress>
             </div>
             <div class="track-icons">
                 <a class="soundcloud-link" target="_blank" href="{{song.permalink_url}}"><img class="soundcloud-logo"  src="https://w.soundcloud.com/icon/assets/images/orange_transparent_64-94fc761.png"/></a>

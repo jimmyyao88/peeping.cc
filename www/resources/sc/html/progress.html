@@ -26,7 +26,12 @@
             </div>
         </div>
         <div class="progress-bar-slider-container"></div>
-        <div class="progress-bar-slider"><div class="progress-bar" ng-style="{ 'width' : width }"></div></div>
+        <div class="progress-bar-slider" seek-track>
+          <div class="progress-bar" ng-style="{ 'width' :  ( progress + '%' ) }"></div>
+        </div>
+        <!-- <div class="seekBase" seek-track>
+            <div class="seekLoad" ng-style="{width : ( progress + '%' ) }"></div>
+        </div> -->
         <div class="track-name-container">
             <div class="progress-track-container"><div class="progress-track">{{trackName}}</div></div>
         </div>

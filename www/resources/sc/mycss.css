@@ -32,7 +32,6 @@ body{
     background: #ffffff;
 }
 
-
 .single-track-container-parent{
     background-color: #ffffff;
     height: 100%;
@@ -364,7 +363,7 @@ img::selection {
 .progress-bar {
     background: rgba(230, 230, 230, 1);
     position: relative;
-    float: right;
+    /*float: right;*/
     height: 100%;
     width: 0%;
     transition: width .2s ease-in-out;
