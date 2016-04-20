@@ -1,8 +1,5 @@
 <div class="tracks-container" ng-show="show">
     <div class="ad-container">
-      <snap-drawer>
-        I'm in a drawer!
-      </snap-drawer>
     </div>
     <div ng-repeat="song in songs" on-finish-render="ngRepeatFinished" class="tile" >
         <div class="track" id="{{song.id}}" data-index="{{$index+1}}">
