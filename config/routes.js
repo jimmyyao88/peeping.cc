@@ -4,9 +4,12 @@
  var requestify=require('requestify');
  var Index = require('../controller/index');
  var search = require('../controller/search');
+ var User = require('../controller/user');
+
 
 
 module.exports=function(app){
+   /**classify**/
    app.get('/tracks/trending',Index.getTrend);
    app.get('/tracks/new',Index.getNew);
    app.get('/tracks/metal',Index.getMetal);
@@ -26,6 +29,11 @@ module.exports=function(app){
    /**search**/
    app.get('/search',search.getSearchResult);
 
+   /**getRawLink**/
    app.get('/play',Index.getRawLink);
+
+   /**user**/
+   app.get('/signup',User.signup);
+   app.get('/signin',User.signin);
 
 };
