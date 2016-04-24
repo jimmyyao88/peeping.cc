@@ -1,4 +1,4 @@
-angular.module('app', ['app.core', 'ui.router', 'infinite-scroll', 'chart.js', 'ngCookies','angularSoundManager','stBlurredDialog'])
+angular.module('app', ['app.core', 'ui.router', 'infinite-scroll', 'chart.js', 'ngCookies','angularSoundManager','stBlurredDialog','ngStorage'])
     .directive('onFinishRender',['$timeout', function ($timeout) {
         return {
             restrict: 'A',
@@ -22,13 +22,16 @@ angular.module('app', ['app.core', 'ui.router', 'infinite-scroll', 'chart.js', '
 }]);
 // end app.js
 
-angular.module('app').run(['$rootScope', '$location', '$window', function($rootScope, $location, $window){
+angular.module('app').run(['$rootScope', '$location', '$window','$localStorage', function($rootScope, $location, $window,$localStorage){
+  if($localStorage.user){
+    console.log('hasUser');
+    $rootScope.user=$localStorage.user;
+  }
     $rootScope
         .$on('$stateChangeSuccess',
         function(event){
             if (!$window.ga)
                 return;
-
             $window.ga('send', 'pageview', { page: $location.path() });
         });
 }]);

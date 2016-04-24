@@ -6,8 +6,6 @@
  var search = require('../controller/search');
  var User = require('../controller/user');
 
-
-
 module.exports=function(app){
    /**classify**/
    app.get('/tracks/trending',Index.getTrend);
@@ -33,7 +31,7 @@ module.exports=function(app){
    app.get('/play',Index.getRawLink);
 
    /**user**/
-   app.get('/signup',User.signup);
-   app.get('/signin',User.signin);
+   app.post('/signup',User.signup);
+   app.post('/signin',User.signin);
 
 };

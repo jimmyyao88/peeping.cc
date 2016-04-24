@@ -100,7 +100,6 @@
                 .success(function (response) {
                     callback(response);
                 });
-
         }
 
         function ForgotPassword(user, callback) {
@@ -190,7 +189,7 @@
             // reset login status
             AuthenticationService.ClearCredentials();
             $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
-            if(run == 0){
+            if(run === 0){
                 $('body').append("<script src='/resources/sc/main.js'></script>");
                 run=1;
                 window.App.init();
@@ -224,7 +223,7 @@
             } else {
                 return false;
             }
-        }
+        };
     }
 
     angular.module('app.core').controller('ForgotPasswordController', ForgotPasswordController);
@@ -239,7 +238,7 @@
         (function initController() {
             // reset login status
             AuthenticationService.ClearCredentials();
-            if(run == 0){
+            if(run === 0){
                 $('body').append("<script src='/resources/sc/main.js'></script>");
                 run=1;
                 window.App.init();
@@ -339,12 +338,48 @@
         };
     }
 
-    angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http', function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http) {
+    angular.module('app').controller('DialogCtrl', ['$scope', 'stBlurredDialog','$http','$localStorage','$rootScope', function($scope, stBlurredDialog,$http,$localStorage,$rootScope){
+    	$scope.dialogData = stBlurredDialog.getDialogData();
+      $scope.register = function(){
+        var user = {
+          nickname:$scope.registerName,
+          email:$scope.registerEmail,
+          password:$scope.registerPassword
+        };
+        $http.post('/signup', {user:user}).success(function(response) {
+          $localStorage.user = response.user;
+          $rootScope.user = $localStorage.user;
+        }).error(function(err){
+          console.log('error',err);
+        });
+      };
+      $scope.login = function(){
+        var user = {
+          email:$scope.signinEmail,
+          password:$scope.signinPassword
+        };
+        $http.post('/signin', {user:user}).success(function(response) {
+          console.log('response',response);
+          $localStorage.user = response.user;
+          $rootScope.user = $localStorage.user;
+        }).error(function(err){
+          console.log('error',err);
+        });
+      };
+    }]);
+
+
+    angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http','stBlurredDialog','$localStorage','$sessionStorage', function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http,stBlurredDialog) {
 
         getAllData();
         var lastProduct = -1;
         var productsLength = 0;
-
+        $scope.toggleLog = function(){
+          $('form').animate({height: 'toggle', opacity: 'toggle'}, 'slow');
+        };
+        $scope.openModal = function(){
+           stBlurredDialog.open('/resources/sc/html/dialogTemplate.html', {msg: 'Hello from the controller!'});
+         };
         $scope.search = function(){
             console.log(this.searchTerm);
             var searchTerm=this.searchTerm;
@@ -361,13 +396,14 @@
         };
 
         $scope.favorite = function(id, index){
-            if(AuthenticationService.isLoggedIn){
-                dataFactory.toggleFavorite(id)
-                    .success(function (data) {
-                        if (data.success) {
-                            $scope.tracks[index].favorited = data.favorited;
-                        }
-                    });
+            if($rootScope.user){
+              console.log('id',id);
+                // dataFactory.toggleFavorite(id)
+                //     .success(function (data) {
+                //         if (data.success) {
+                //             $scope.tracks[index].favorited = data.favorited;
+                //         }
+                //     });
             }
         };
 

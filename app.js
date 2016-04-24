@@ -7,12 +7,14 @@ var MongoStore = require('connect-mongo')(session);
 var multiPart=require('connect-multiparty');
 var mongoose = require('mongoose');
 var jwt = require('jwt-simple');
-var app=express();
+var app = module.exports = express();
 var port=4000;
 var dbUrl="mongodb://127.0.0.1/peeping";
 
 mongoose.connect(dbUrl);
 app.locals.moment=require('moment');
+app.use(bodyParser.urlencoded({ extended: true ,limit: '5mb'}));
+app.use(bodyParser.json({limit: '5mb'}));
 app.use(session({
     secret: 'peeping',
     store:new MongoStore({
@@ -29,5 +31,4 @@ app.use(multiPart());
 
 console.log('server start');
 require('./config/routes')(app);
-
 app.listen(port);
