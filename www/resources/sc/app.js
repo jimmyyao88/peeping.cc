@@ -103,12 +103,10 @@
         }
 
         function ForgotPassword(user, callback) {
-
             $http.post('/soundcloud/forgotpw', user)
                 .success(function (response) {
                     callback(response);
                 });
-
         }
 
         function SetCredentials(response) {
@@ -369,8 +367,8 @@
     }]);
 
 
-    angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http','stBlurredDialog','$localStorage','$sessionStorage', function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http,stBlurredDialog) {
-
+    angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http','stBlurredDialog', '$q',function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http,stBlurredDialog,$q) {
+        //alert(1);
         getAllData();
         var lastProduct = -1;
         var productsLength = 0;
@@ -398,12 +396,18 @@
         $scope.favorite = function(id, index){
             if($rootScope.user){
               console.log('id',id);
-                // dataFactory.toggleFavorite(id)
-                //     .success(function (data) {
-                //         if (data.success) {
-                //             $scope.tracks[index].favorited = data.favorited;
-                //         }
-                //     });
+              $http.post(
+                '/favorite/save',
+                {id:id},
+                {
+                  headers:{
+                    'access_token':$rootScope.user.token
+                  }
+                }).success(function(response) {
+                console.log('response',response);
+              }).error(function(err){
+                console.log('error',err);
+              });
             }
         };
 
@@ -450,109 +454,75 @@
               .getAllData($location.path(),$stateParams)
               .success(function (data) {
                     console.log('data',data);
-
-                    if(data.success){
-                        AuthenticationService.SetCredentials(data);
-                    }
-                    else{
-                        AuthenticationService.isLoggedIn=0;
-                    }
-                    if($location.path().indexOf('/track/') > -1){
-                        $scope.hideButtons = true;
-                    }
-                    $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
-                    $scope.show = true;
-                    $scope.searchTerm = "";
-                    angular.forEach(data.songs,function(value,index){
-                      if(data.songs[index].artwork_url){
-                        data.songs[index].artwork_url=data.songs[index].artwork_url.replace(/large.jpg/,'t500x500.jpg');
-                      }
-                    });
-                    $scope.songs = data.songs;
-                    console.log('$scope.songs',$scope.songs);
-                    if(typeof $rootScope.header === 'undefined'){
-                        $rootScope.header = "Rising.fm | New Music Discovery";
-                    }
-                    if($scope.songs.length === 0){
-                        $scope.img = '';
-                        dataFactory.getFunny()
-                            .success(function (data) {
-                                var imgs = [];
-                                for(var i = 0; i < data.data.children.length; i++){
-                                    if(data.data.children[i].data.url.indexOf('imgur.com') > -1 && data.data.children[i].data.url.indexOf('.gif') > -1){
-                                        imgs.push(data.data.children[i].data.url);
-                                    }
-                                }
-                                dataFactory.getGifs()
-                                    .success(function (data) {
-                                        for(var i = 0; i < data.data.children.length; i++){
-                                            if(data.data.children[i].data.url.indexOf('imgur.com') > -1 && data.data.children[i].data.url.indexOf('.gif') > -1){
-                                                imgs.push(data.data.children[i].data.url);
-                                            }
-                                        }
-                                        var rand = Math.floor(Math.random() * (imgs.length - 0 + 0)) + 0;
-                                        $scope.img = imgs[rand].replace('.gifv', '.gif');
-                                    });
-                            });
-                    }
-                    else{
-                        for(var i = 0; i < $scope.songs.length; i++){
-                            shuffleOrder[i] = $scope.songs[i].id;
-                        }
+                    if($location.path().indexOf('favorites')>-1){
+                      var promiseArr = [];
+                      angular.forEach(data,function(value,index){
+                        var promise = $http.get('/track?id='+value).then(function(response){
+                          return response.data;
+                        });
+                        promiseArr.push(promise);
+                      });
+                      $q.all(promiseArr).then(function(response){
+                        console.log('response promise arr',response);
+                        var data = {};
+                        data.favorited='';
+                        data.success=false;
+                        data.user=null;
+                        data.songs=[];
+                        response.forEach(function(song,index){
+                             song.url= '/play?id='+song.id;
+                             data.songs.push(song);
+                        });
+                        // data.tracks=data.collection;
+                        //data.songs = response;
+                        bindData(data);
+                      });
+                    }else{
+                      bindData(data);
                     }
 
-                    // $scope.songs = [
-                    //     {
-                    //         id: 'one',
-                    //         title: 'Rain',
-                    //         artist: 'Drake',
-                    //         url: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/rain.mp3',
-                    //         cover: 'sa'
-                    //     },
-                    //     {
-                    //         id: 'two',
-                    //         title: 'Walking',
-                    //         artist: 'Nicki Minaj',
-                    //         url: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/walking.mp3'
-                    //     },
-                    //     {
-                    //         id: 'three',
-                    //         title: 'Barrlping with Carl (featureblend.com)',
-                    //         artist: 'Akon',
-                    //         url: 'http://www.freshly-ground.com/misc/music/carl-3-barlp.mp3'
-                    //     },
-                    //     {
-                    //         id: 'four',
-                    //         title: 'Angry cow sound?',
-                    //         artist: 'A Cow',
-                    //         url: 'http://www.freshly-ground.com/data/audio/binaural/Mak.mp3'
-                    //     },
-                    //     {
-                    //         id: 'five',
-                    //         title: 'Things that open, close and roll',
-                    //         artist: 'Someone',
-                    //         url: 'http://www.freshly-ground.com/data/audio/binaural/Things%20that%20open,%20close%20and%20roll.mp3'
-                    //     }
-                    // ];
-
-
-                    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-                        $rootScope.rootShow = true;
-                        //player.play(currentId,volume,progressClicked);
-
-                        if(run == 0){
-                            $('body').append("<script src='/resources/sc/main.js'></script>");
-                            run=1;
-                            window.App.init();
-                        }
-                        window.App.openNav();
-                    });
                 })
                 .error(function (error) {
                     $scope.status = 'Unable to load data: ' + error.message;
                 });
         }
+        function bindData (data){
+          if(data.success){
+              AuthenticationService.SetCredentials(data);
+          }
+          else{
+              AuthenticationService.isLoggedIn=0;
+          }
+          if($location.path().indexOf('/track/') > -1){
+              $scope.hideButtons = true;
+          }
+          $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
+          $scope.show = true;
+          $scope.searchTerm = "";
+          angular.forEach(data.songs,function(value,index){
+            if(data.songs[index].artwork_url){
+              data.songs[index].artwork_url=data.songs[index].artwork_url.replace(/large.jpg/,'t500x500.jpg');
+            }
+          });
+          $scope.songs = data.songs;
+          console.log('$scope.songs',$scope.songs);
+          if(typeof $rootScope.header === 'undefined'){
+              $rootScope.header = "Rising.fm | New Music Discovery";
+          }
 
+
+          $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+              $rootScope.rootShow = true;
+              //player.play(currentId,volume,progressClicked);
+
+              if(run == 0){
+                  $('body').append("<script src='/resources/sc/main.js'></script>");
+                  run=1;
+                  window.App.init();
+              }
+              window.App.openNav();
+          });
+        }
         $scope.reload = function () {
             if($state.current.name === 'index') {
                 $state.go('index', {}, { reload: true });

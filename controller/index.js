@@ -377,3 +377,16 @@ exports.getDubstep=function(req,res){
     console.log(err);
   });
 };
+
+exports.getTrackInfo = function(req,res){
+  var id = req.query.id;
+  var url = 'http://api.soundcloud.com/tracks/'+id+'?client_id='+client_id;
+  requestify
+   .get(url)
+   .then(function(response){
+     console.log('response',response);
+     res.send(response.body);
+   },function(err){
+     console.log(err);
+   });
+};

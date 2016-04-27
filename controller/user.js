@@ -63,16 +63,18 @@ exports.signin = function(req,res){
 
 exports.validToken = function(req,res,next){
   var token = req.headers['access_token'];
+  console.log(req.headers);
   if (token) {
     try {
       var decoded = jwt.decode(token, app.get('jwtTokenSecret'));
       if (decoded.exp <= Date.now()) {
-        res.end('Access token has expired', 401);
+        res.send(403, 'Access token has expired');
       }else{
         req.userId =  decoded.iss;
+        next();
       }
     } catch (err) {
-      return next();
+      res.send(500, 'internal error');
     }
   } else {
     res.send(403, 'unauthorized');
@@ -81,14 +83,16 @@ exports.validToken = function(req,res,next){
 
 exports.saveFavorite = function(req,res){
   var id = req.body.id;
+  var promise = User.findByIdAndUpdate(req.userId,{$addToSet:{favorites:id}}).exec();
+  promise.then(function(user){
+    console.log('user',user);
+    res.send(200, 'success' );
+  });
+};
+
+exports.getFavorites = function(req,res){
   var promise = User.find({_id:req.userId}).exec();
-  promise
-  .then(function(user){
-    return User.findByIdAndUpdate(user._id,{$addToSet:{favorites:id}}).exec();
-  })
-  .then(function(){
-    res.send({
-        status:200
-    });
+  promise.then(function(user){
+    res.send(user[0].favorites);
   });
 };

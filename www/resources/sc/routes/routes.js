@@ -94,7 +94,7 @@ angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProv
             controller: 'Project'
         })
         .state('favorites', {
-            url: "/favorites/{username}?_escaped_fragment_",
+            url: "/favorites?_escaped_fragment_",
             templateUrl: '/resources/sc/html/main_static.html',
             controller: 'Project'
         })

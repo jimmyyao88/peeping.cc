@@ -1,4 +1,4 @@
-angular.module('app.core', []).factory('dataFactory', ['$http', function ($http) {
+angular.module('app.core', []).factory('dataFactory', ['$http','$rootScope', function ($http,$rootScope) {
     // var urlBase = 'http://rising.fm/soundcloud/';
     var urlBase = '/';
     var dataFactory = {};
@@ -46,7 +46,11 @@ angular.module('app.core', []).factory('dataFactory', ['$http', function ($http)
             params += "position="+stateParams.position;
         }
         console.log(urlBase + 'tracks' + path + params);
-        return $http.get(urlBase + 'tracks' + path + params);
+        return $http.get(urlBase + 'tracks' + path + params,{
+          headers:{
+            'access_token':$rootScope.user.token
+          }
+        });
     };
 
     dataFactory.toggleFavorite = function (id) {

@@ -24,6 +24,10 @@ module.exports=function(app){
    app.get('/tracks/country',Index.getCountry);
    app.get('/tracks/dancehall',Index.getDancehall);
    app.get('/tracks/dubstep',Index.getDubstep);
+
+   /**track**/
+   app.get('/track',Index.getTrackInfo);
+
    /**search**/
    app.get('/search',search.getSearchResult);
 
@@ -33,5 +37,9 @@ module.exports=function(app){
    /**user**/
    app.post('/signup',User.signup);
    app.post('/signin',User.signin);
+
+   /**favorites**/
+   app.post('/favorite/save',User.validToken,User.saveFavorite);
+   app.get('/tracks/favorites',User.validToken,User.getFavorites);
 
 };
