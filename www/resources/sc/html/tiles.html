@@ -13,7 +13,7 @@
                         {{song.user.username}}
                     </div>
                     <div class="track-name">
-                        <a id="track-name" href="/track/{{song.internal_url}}">{{song.title}}</a>
+                        <a id="track-name" href="#/charts/detail/{{song.id}}">{{song.title}}</a>
                     </div>
                     <div id="favorite-track" class="{{'favorite-track ' + song.favorited}}" ng-click="favorite(song.id, $index)">
 

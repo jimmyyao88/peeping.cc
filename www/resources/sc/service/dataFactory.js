@@ -45,8 +45,13 @@ angular.module('app.core', []).factory('dataFactory', ['$http','$rootScope', fun
             }
             params += "position="+stateParams.position;
         }
-        console.log(urlBase + 'tracks' + path + params);
-        return $http.get(urlBase + 'tracks' + path + params,{
+        if(!(typeof stateParams.query === 'undefined')){
+          params += "?query="+stateParams.query;
+        }
+        //console.log(urlBase + 'tracks' + path + params);
+        console.log('tracks');
+        console.log(path);
+        return $http.get( path + params,{
           headers:{
             'access_token':$rootScope.user.token
           }

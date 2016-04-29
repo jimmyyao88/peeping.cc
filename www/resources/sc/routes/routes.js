@@ -4,99 +4,105 @@ angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProv
 
     //$locationProvider.html5Mode(false);
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/trending");
+    $urlRouterProvider.otherwise("/charts/trending");
     //
     // Now set up the states
     $stateProvider
         .state('index', {
-            url: "/?_escaped_fragment_&token",
+            url: "/charts",
+            abstract:true,
             templateUrl: '/resources/sc/html/main_static.html',
+            controller: 'rootCtrl'
+        })
+        .state('index.trending', {
+            url: "/trending",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('trending', {
-            url: "/trending?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.new', {
+            url: "/new",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('new', {
-            url: "/new?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.pop', {
+            url: "/pop",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('pop', {
-            url: "/pop?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.indie', {
+            url: "/indie",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('indie', {
-            url: "/indie?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.rock', {
+            url: "/rock",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('rock', {
-            url: "/rock?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.hiphop', {
+            url: "/hiphop",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('hiphop', {
-            url: "/hiphop?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.electronic', {
+            url: "/electronic",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('electronic', {
-            url: "/electronic?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.deephouse', {
+            url: "/deephouse",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('deephouse', {
-            url: "/deephouse?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.country', {
+            url: "/country",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('country', {
-            url: "/country?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.dancehall', {
+            url: "/dancehall",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('dancehall', {
-            url: "/dancehall?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.dubstep', {
+            url: "/dubstep",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('dubstep', {
-            url: "/dubstep?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.jazzblues', {
+            url: "/jazzblues",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('jazzblues', {
-            url: "/jazzblues?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.rbsoul', {
+            url: "/rbsoul",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('rbsoul', {
-            url: "/rbsoul?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.house', {
+            url: "/house",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('house', {
-            url: "/house?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.trap', {
+            url: "/trap",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('trap', {
-            url: "/trap?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.remix', {
+            url: "/remix",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('remix', {
-            url: "/remix?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
+        .state('index.favorites', {
+            url: "/favorites",
+            templateUrl: '/resources/sc/html/tiles.html',
             controller: 'Project'
         })
-        .state('favorites', {
-            url: "/favorites?_escaped_fragment_",
-            templateUrl: '/resources/sc/html/main_static.html',
-            controller: 'Project'
+        .state('index.detail',{
+          url: "/detail/:id",
+          templateUrl: '/resources/sc/html/detail.html',
+          controller: 'DetailCtrl'
         })
         .state('lastfm', {
             url: "/lastfm",

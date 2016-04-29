@@ -379,7 +379,8 @@ exports.getDubstep=function(req,res){
 };
 
 exports.getTrackInfo = function(req,res){
-  var id = req.query.id;
+  var id = req.params.id;
+  console.log('id',id);
   var url = 'http://api.soundcloud.com/tracks/'+id+'?client_id='+client_id;
   requestify
    .get(url)

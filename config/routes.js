@@ -8,28 +8,28 @@
 
 module.exports=function(app){
    /**classify**/
-   app.get('/tracks/trending',Index.getTrend);
-   app.get('/tracks/new',Index.getNew);
-   app.get('/tracks/metal',Index.getMetal);
-   app.get('/tracks/indie',Index.getIndie);
-   app.get('/tracks/electronic',Index.getElectronic);
-   app.get('/tracks/hiphop',Index.getHiphop);
-   app.get('/tracks/pop',Index.getPop);
-   app.get('/tracks/rock',Index.getRock);
-   app.get('/tracks/deephouse',Index.getDeephouse);
-   app.get('/tracks/house',Index.getHouse);
-   app.get('/tracks/rbsoul',Index.getRbsoul);
-   app.get('/tracks/jazzblues',Index.getJazzblues);
-   app.get('/tracks/trap',Index.getTrap);
-   app.get('/tracks/country',Index.getCountry);
-   app.get('/tracks/dancehall',Index.getDancehall);
-   app.get('/tracks/dubstep',Index.getDubstep);
+   app.get('/charts/trending',Index.getTrend);
+   app.get('/charts/new',Index.getNew);
+   app.get('/charts/metal',Index.getMetal);
+   app.get('/charts/indie',Index.getIndie);
+   app.get('/charts/electronic',Index.getElectronic);
+   app.get('/charts/hiphop',Index.getHiphop);
+   app.get('/charts/pop',Index.getPop);
+   app.get('/charts/rock',Index.getRock);
+   app.get('/charts/deephouse',Index.getDeephouse);
+   app.get('/charts/house',Index.getHouse);
+   app.get('/charts/rbsoul',Index.getRbsoul);
+   app.get('/charts/jazzblues',Index.getJazzblues);
+   app.get('/charts/trap',Index.getTrap);
+   app.get('/charts/country',Index.getCountry);
+   app.get('/charts/dancehall',Index.getDancehall);
+   app.get('/charts/dubstep',Index.getDubstep);
 
    /**track**/
-   app.get('/track',Index.getTrackInfo);
+   app.get('/track/:id',Index.getTrackInfo);
 
    /**search**/
-   app.get('/search',search.getSearchResult);
+   app.get('/tracks/search',search.getSearchResult);
 
    /**getRawLink**/
    app.get('/play',Index.getRawLink);

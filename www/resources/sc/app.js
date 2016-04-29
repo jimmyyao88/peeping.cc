@@ -366,6 +366,25 @@
       };
     }]);
 
+    angular.module('app').controller('rootCtrl',['$scope','$location',function($scope,$location){
+
+      $scope.isActive = function (path) {
+
+          if(path == '/trending' && $location.path() === '/'){
+              return true;
+          }
+          else if ($location.path().substr(0, path.length) === path) {
+              return true;
+          } else {
+              return false;
+          }
+      };
+    }]);
+    angular.module('app').controller('DetailCtrl',['$scope','$state','$http',function($scope,$state,$http){
+      $http.get('/track/'+$state.params.id).success(function(data){
+        console.log(data);
+      });
+    }]);
 
     angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http','stBlurredDialog', '$q',function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http,stBlurredDialog,$q) {
         //alert(1);
@@ -379,18 +398,7 @@
            stBlurredDialog.open('/resources/sc/html/dialogTemplate.html', {msg: 'Hello from the controller!'});
          };
         $scope.search = function(){
-            console.log(this.searchTerm);
-            var searchTerm=this.searchTerm;
-            $http.get('/search?q='+searchTerm).success(function(data){
-              $scope.tracks=[];
-              for(var i = 0; i < data.length; i++){
-                  var temp=data[i];
-                  data[i]={};
-                  data[i].track=temp;
-                  $scope.tracks.push(data[i]);
-              }
-              console.log('data',data);
-            });
+            $location.path('/search').search({query: this.searchTerm});
         };
 
         $scope.favorite = function(id, index){
@@ -463,7 +471,6 @@
                         promiseArr.push(promise);
                       });
                       $q.all(promiseArr).then(function(response){
-                        console.log('response promise arr',response);
                         var data = {};
                         data.favorited='';
                         data.success=false;
@@ -473,12 +480,13 @@
                              song.url= '/play?id='+song.id;
                              data.songs.push(song);
                         });
+
                         // data.tracks=data.collection;
                         //data.songs = response;
-                        bindData(data);
+                        $scope.bindData(data);
                       });
                     }else{
-                      bindData(data);
+                      $scope.bindData(data);
                     }
 
                 })
@@ -486,7 +494,7 @@
                     $scope.status = 'Unable to load data: ' + error.message;
                 });
         }
-        function bindData (data){
+        $scope.bindData =function (data){
           if(data.success){
               AuthenticationService.SetCredentials(data);
           }
@@ -513,7 +521,6 @@
 
           $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
               $rootScope.rootShow = true;
-              //player.play(currentId,volume,progressClicked);
 
               if(run == 0){
                   $('body').append("<script src='/resources/sc/main.js'></script>");
