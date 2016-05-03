@@ -27,6 +27,7 @@ module.exports=function(app){
 
    /**track**/
    app.get('/track/:id',Index.getTrackInfo);
+   app.get('/tracks/related/:id',Index.getRelatedTracks);
 
    /**search**/
    app.get('/tracks/search',search.getSearchResult);

@@ -391,3 +391,17 @@ exports.getTrackInfo = function(req,res){
      console.log(err);
    });
 };
+
+exports.getRelatedTracks = function(req,res){
+  var id = req.params.id;
+  console.log('id',id);
+  var url = 'http://api.soundcloud.com/tracks/'+id+'/related'+'?client_id='+client_id+'&limit=10';
+  requestify
+   .get(url)
+   .then(function(response){
+     console.log('response',response);
+     res.send(response.body);
+   },function(err){
+     console.log(err);
+   });
+};

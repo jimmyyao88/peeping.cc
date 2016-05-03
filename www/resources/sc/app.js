@@ -190,9 +190,9 @@
             if(run === 0){
                 $('body').append("<script src='/resources/sc/main.js'></script>");
                 run=1;
-                window.App.init();
+                //window.App.init();
             }
-            window.App.closeNav();
+            //window.App.closeNav();
             $rootScope.rootShow = true;
             $scope.show = true;
         })();
@@ -211,7 +211,6 @@
                 $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
             });
         };
-
         $scope.isActive = function (path) {
             if(path == '/trending' && $location.path() === '/'){
                 return true;
@@ -239,9 +238,9 @@
             if(run === 0){
                 $('body').append("<script src='/resources/sc/main.js'></script>");
                 run=1;
-                window.App.init();
+                //window.App.init();
             }
-            window.App.closeNav();
+            //window.App.closeNav();
             $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
             $rootScope.rootShow = true;
             $scope.show = true;
@@ -302,9 +301,9 @@
         if(run === 0){
             $('body').append("<script src='/resources/sc/main.js'></script>");
             run=1;
-            window.App.init();
+            //window.App.init();
         }
-        window.App.closeNav();
+        //window.App.closeNav();
         $rootScope.rootShow = true;
 
         $scope.join = function() {
@@ -337,7 +336,7 @@
     }
 
     angular.module('app').controller('DialogCtrl', ['$scope', 'stBlurredDialog','$http','$localStorage','$rootScope', function($scope, stBlurredDialog,$http,$localStorage,$rootScope){
-    	$scope.dialogData = stBlurredDialog.getDialogData();
+      $scope.dialogData = stBlurredDialog.getDialogData();
       $scope.register = function(){
         var user = {
           nickname:$scope.registerName,
@@ -364,16 +363,18 @@
           console.log('error',err);
         });
       };
+
+
     }]);
 
     angular.module('app').controller('rootCtrl',['$scope','$location',function($scope,$location){
 
       $scope.isActive = function (path) {
-
+        console.log('sss',$location.path().substr(-path.length,path.length));
           if(path == '/trending' && $location.path() === '/'){
               return true;
           }
-          else if ($location.path().substr(0, path.length) === path) {
+          else if ($location.path().substr( -path.length,path.length ) === path) {
               return true;
           } else {
               return false;
@@ -382,8 +383,37 @@
     }]);
     angular.module('app').controller('DetailCtrl',['$scope','$state','$http',function($scope,$state,$http){
       $http.get('/track/'+$state.params.id).success(function(data){
-        console.log(data);
+        console.log('data',data);
+        if(data.artwork_url){
+          data.artwork_url=data.artwork_url.replace(/large.jpg/,'t500x500.jpg');
+        }
+        $scope.song = data;
+        $scope.show=true;
+
+        //console.log(data);
+        //$scope.
+      }).then(function(){
+        return  $http.get('/tracks/related/'+$state.params.id);
+      }).then(function(data){
+        console.log('data',data);
+        $scope.relatedSongs = data.data;
       });
+
+      $scope.showDesc = false;
+      $scope.toggleStatus = "展开";
+
+      $scope.toggleDesc = function(){
+        if($scope.showDesc){
+          $('.detail-description-container').css('height','40px');
+          $scope.showDesc = false;
+          $scope.toggleStatus = "展开";
+        }else{
+          $('.detail-description-container').css('height','auto');
+          $scope.showDesc = true;
+          $scope.toggleStatus = "折叠";
+        }
+
+      };
     }]);
 
     angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http','stBlurredDialog', '$q',function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http,stBlurredDialog,$q) {
@@ -525,9 +555,9 @@
               if(run == 0){
                   $('body').append("<script src='/resources/sc/main.js'></script>");
                   run=1;
-                  window.App.init();
+                  //window.App.init();
               }
-              window.App.openNav();
+              //window.App.openNav();
           });
         }
         $scope.reload = function () {

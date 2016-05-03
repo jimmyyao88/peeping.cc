@@ -64,8 +64,8 @@ body{
     display: inline-block;
 }
 .track{
-    padding-left: 2px;
-    padding-right: 2px;
+    /*padding-left: 2px;*/
+    /*padding-right: 2px;*/
     position: relative;
     cursor: pointer;
 }
@@ -237,7 +237,74 @@ body{
     }
 
 }
+.detail-description{
+  font-size: 12px;
+  padding: 6px;
+  background-color: #1f282d;
+  color: #fff;
+  position:relative;
+}
+.detail-description-container{
+  height: 40px;
+  overflow: hidden;
+  font-size: 11px;
+}
+.detail-description-more{
+  height: 30px;
+  padding-top: 10px;
+}
+.btn-showmore{
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  padding: 3px 10px;
+  float: right;
+  font-size: 10px;
+  color: #fff;
+  outline: none;
+}
+.detail-container{
+  background-color: #171a1d;
+}
+.detail-description-title{
 
+}
+.title{
+  color: #70c989;
+  text-transform: uppercase;
+  line-height: 26px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.related-song{
+  padding: 6px;
+}
+.related-song-container{
+  display: inline-block;
+  color: #fff;
+  width: 100%;
+}
+.related-song-list li{
+  margin-bottom: 5px;
+}
+.related-artwork{
+  width: 52px;
+  height: 52px;
+  border: 2px solid #232b2d;
+  margin-right: 20px;
+  float: left;
+}
+.related-artwork img{
+  width:100%;
+}
+.related-detail-title{
+  color: #fff;
+  font-size: 12px;
+}
+.related-detail-username{
+  color: #8c989c;
+  font-size: 12px;
+}
 .track-progress, .play-container{
     background: transparent;
     width: 100%;
