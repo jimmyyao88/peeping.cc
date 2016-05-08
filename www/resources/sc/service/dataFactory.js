@@ -12,50 +12,20 @@ angular.module('app.core', []).factory('dataFactory', ['$http','$rootScope', fun
         return $http.post('/soundcloud/disconnectLastFM');
     };
 
-    dataFactory.getAllData = function (path, stateParams) {
-        var params = "";
-        var paramsCount = 0;
-        if(!(typeof stateParams.token === 'undefined')){
-            if(paramsCount == 0){
-                params += "?";
-                paramsCount++;
-            }
-            else{
-                params += "&";
-            }
-            params += "token="+stateParams.token;
-        }
-        if(!(typeof stateParams._escaped_fragment_ === 'undefined')){
-            if(paramsCount == 0){
-                params += "?";
-                paramsCount++;
-            }
-            else{
-                params += "&";
-            }
-            params += "_escaped_fragment_";
-        }
-        if(!(typeof stateParams.position === 'undefined')){
-            if(paramsCount == 0){
-                params += "?";
-                paramsCount++;
-            }
-            else{
-                params += "&";
-            }
-            params += "position="+stateParams.position;
-        }
-        if(!(typeof stateParams.query === 'undefined')){
-          params += "?query="+stateParams.query;
-        }
-        //console.log(urlBase + 'tracks' + path + params);
+    dataFactory.getAllData = function (path) {
+
         console.log('tracks');
         console.log(path);
-        return $http.get( path + params,{
-          headers:{
-            'access_token':$rootScope.user.token
-          }
-        });
+        if($rootScope.user){
+          return $http.get( path ,{
+            headers:{
+              'access_token':$rootScope.user.token
+            }
+          });
+        }else{
+          return $http.get( path );
+        }
+
     };
 
     dataFactory.toggleFavorite = function (id) {

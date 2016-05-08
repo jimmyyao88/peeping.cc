@@ -1,25 +1,25 @@
 <div class="header-container" >
     <div class="header-relative">
         <nav role="navigation" class="navigation">
-          <div id="menuToggle">
-            <input type="checkbox" />
-            <span></span>
-            <span></span>
-            <span></span>
-            <ul id="menu">
-              <a href="#" ng-if="!user" ng-click="openModal()"><li>signin/register</li></a>
-              <a href="#" ng-if="user"><li>{{user.nickname}}</li></a>
-              <a href="#" ><li>LOGOUT</li></a>
-              <a href="#"><li>ABOUT</li></a>
-              <a href="#/favorites"><li>FAVORITES</li></a>
-              <!-- <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a> -->
-            </ul>
-          </div>
         </nav>
         <header id="top" role="banner">
             <div class="header-absolute" id="header-absolute"></div>
             <div class="button-block">
-                <a class="nav-btn" id="nav-open-btn" href="#nav"></a>
+              <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                  <a href="#" ng-if="!user" ng-click="openModal()"><li>signin/register</li></a>
+                  <a href="#" ng-if="user"><li>{{user.nickname}}</li></a>
+                  <a href="#" ng-if="user" ng-click="logout()"><li>LOGOUT</li></a>
+                  <a href="#"><li>ABOUT</li></a>
+                  <a href="#/favorites"><li>FAVORITES</li></a>
+                  <!-- <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a> -->
+                </ul>
+              </div>
+                <!-- <a class="nav-btn" id="nav-open-btn" href="#nav"></a> -->
             </div>
             <div class="block">
                 <h1 class="block-title"><a class="brand" ng-href="/">PEEP</a></h1>
@@ -28,6 +28,9 @@
                 <div class="music-nav-block">
                     <div class="music-nav">
                         <ul>
+                            <li ng-class="{'is-active': {{isActive('/charts/recommend')}}}" ng-if="user">
+                                <a ng-href="#/charts/recommend">Recommend</a>
+                            </li>
                             <li ng-class="{'is-active': {{isActive('/charts/trending')}}}">
                                 <a ng-href="#/charts/trending">Trending</a>
                             </li>

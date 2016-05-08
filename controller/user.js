@@ -3,6 +3,9 @@ var User=require('../model/user');
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var app = require('../app');
+var Promise = require('promise');
+var client_id = 'a3e059563d7fd3372b49b37f00a00bcf';
+var requestify = require('requestify');
 exports.signup=function(req,res){
     var _user=req.body.user;
     console.log(_user);
@@ -95,4 +98,34 @@ exports.getFavorites = function(req,res){
   promise.then(function(user){
     res.send(user[0].favorites);
   });
+};
+
+exports.getRecommend = function(req,res){
+  //收藏的前3个的 前十个related
+  if(req.body.favorites){
+    console.log('favorites',req.body.favorites);
+    if(req.body.favorites.length<=3){
+      var favorites = req.body.favorites;
+      var promiseArr = [];
+      favorites.forEach(function(favorite,index){
+        var url = 'http://api.soundcloud.com/tracks/'+favorite+'/related'+'?client_id='+client_id+'&limit=10';
+        var promise = requestify.get(url).then(function(response){ return JSON.parse(response.body);});
+        promiseArr.push(promise);
+      });
+      Promise.all(promiseArr).then(function(response){
+        var data = [];
+        response.forEach(function(tracks,index){
+          tracks.forEach(function(track,index){
+            track.url = '/play?id='+track.id;
+            data.push(track);
+          });
+        });
+        res.send(data);
+      });
+    }else{
+      res.send('invalid access');
+    }
+  }else{
+    res.send('invalid access');
+  }
 };

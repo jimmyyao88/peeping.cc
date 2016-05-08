@@ -5,6 +5,7 @@
  var Index = require('../controller/index');
  var search = require('../controller/search');
  var User = require('../controller/user');
+ var Profile = require('../controller/profile');
 
 module.exports=function(app){
    /**classify**/
@@ -24,14 +25,16 @@ module.exports=function(app){
    app.get('/charts/country',Index.getCountry);
    app.get('/charts/dancehall',Index.getDancehall);
    app.get('/charts/dubstep',Index.getDubstep);
-
+   /***recomend***/
+   app.post('/tracks/recommend',User.getRecommend);
+   /***profile**/
+   app.get('/profile/:id',Profile.getProfile);
+   app.get('/profile/:id/tracks',Profile.getProfileTracks);
    /**track**/
    app.get('/track/:id',Index.getTrackInfo);
    app.get('/tracks/related/:id',Index.getRelatedTracks);
-
    /**search**/
    app.get('/tracks/search',search.getSearchResult);
-
    /**getRawLink**/
    app.get('/play',Index.getRawLink);
 

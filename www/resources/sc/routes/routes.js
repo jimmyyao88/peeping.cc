@@ -3,16 +3,40 @@ angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProv
     $httpProvider.defaults.withCredentials = true;
 
     //$locationProvider.html5Mode(false);
-    // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/charts/trending");
+    if($rootScope.user){
+      $urlRouterProvider.otherwise("/charts/recomend");
+    }else{
+      $urlRouterProvider.otherwise("/charts/trending");
+    }
     //
     // Now set up the states
     $stateProvider
         .state('index', {
             url: "/charts",
             abstract:true,
-            templateUrl: '/resources/sc/html/main_static.html',
-            controller: 'rootCtrl'
+            views:{
+              'header':{
+                templateUrl:'/resources/sc/html/header.html',
+                controller: 'rootCtrl'
+              },
+              'footer':{
+                templateUrl:'/resources/sc/html/footer.html',
+                controller: 'rootCtrl'
+              },
+              'progress':{
+                templateUrl:'/resources/sc/html/progress.html',
+                controller: 'rootCtrl'
+              },
+              'main':{
+                templateUrl:'/resources/sc/html/main_static.html',
+                controler: 'rootCtrl'
+              }
+            },
+        })
+        .state('index.recommend',{
+            url: "/recommend",
+            templateUrl: '/resources/sc/html/tiles.html',
+            controller: 'Recommend'
         })
         .state('index.trending', {
             url: "/trending",
@@ -103,6 +127,11 @@ angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProv
           url: "/detail/:id",
           templateUrl: '/resources/sc/html/detail.html',
           controller: 'DetailCtrl'
+        })
+        .state('index.profile',{
+          url: '/profile/:id',
+          templateUrl: '/resources/sc/html/profile.html',
+          controller: 'ProfileCtrl'
         })
         .state('lastfm', {
             url: "/lastfm",

@@ -1,13 +1,13 @@
-<div class="tracks-container" ng-show="show">
-    <div class="ad-container">
-    </div>
+<div class="tracks-container">
+    <!-- <div ng-if="showAlert">{{alert}}</div> -->
     <div ng-repeat="song in songs" on-finish-render="ngRepeatFinished" class="tile" >
         <div class="track" id="{{song.id}}" data-index="{{$index+1}}">
             <img src="{{song.artwork_url}}" class="tile-artwork">
             <div class="info-container">
                 <div class="track-info">
                     <div class="track-number">
-                        {{($index+1) > 9 ? ($index+1): "0" + ($index+1)}}
+                        <!-- {{($index+1) > 9 ? ($index+1): "0" + ($index+1)}} -->
+                        <img src="{{song.user.avatar_url}}" width="20" height="20"/>
                     </div>
                     <div class="track-artist">
                         {{song.user.username}}
@@ -39,4 +39,14 @@
             <p class="load-more-text">LOAD MORE</p>
         </div>
     </div>
+    <div class="spinner" ng-if="loading">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+    <div infinite-scroll="load()" infinite-scroll-distance="1" infinite-scroll-disabled="!haveMore||loading"></div>
+
+
 </div>

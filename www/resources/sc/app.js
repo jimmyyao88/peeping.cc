@@ -24,11 +24,6 @@
         return array;
     }
 
-    function setValue(e, v) {
-        var instance = $("#circle-md").data('circle-progress');
-        $(instance.canvas).stop(true, true);
-    }
-
     // end dataservice.js
 
     angular.module('app.core').factory('FlashService', FlashService);
@@ -167,7 +162,7 @@
         link: function(scope, elem){
           elem.on('click',function(){
             console.log('clicked');
-            $('.progress-bar-container').css('background-color','#fff');
+            $('.progress-bar-container').css('background-color',"rgb(16, 16, 16)");
           });
         }
       };
@@ -271,7 +266,6 @@
     }
 
     angular.module('app.core').controller('LogoutController', LogoutController);
-
     LogoutController.$inject = ['$scope', '$location', 'AuthenticationService'];
 
     function LogoutController($scope, $location, AuthenticationService) {
@@ -292,7 +286,6 @@
     }
 
     angular.module('app.core').controller('JoinController', JoinController);
-
     JoinController.$inject = ['$scope','UserService', '$location', '$rootScope', 'AuthenticationService', 'FlashService'];
     function JoinController($scope, UserService, $location, $rootScope, AuthenticationService, FlashService) {
         var vm = this;
@@ -303,9 +296,7 @@
             run=1;
             //window.App.init();
         }
-        //window.App.closeNav();
         $rootScope.rootShow = true;
-
         $scope.join = function() {
             vm.dataLoading = true;
             UserService.Create(this.vm.user)
@@ -356,21 +347,28 @@
           password:$scope.signinPassword
         };
         $http.post('/signin', {user:user}).success(function(response) {
-          console.log('response',response);
           $localStorage.user = response.user;
           $rootScope.user = $localStorage.user;
         }).error(function(err){
           console.log('error',err);
         });
       };
-
-
     }]);
+    angular.module('app').directive('peepingHeader',function(){
+      return {
+        restrict:'AE',
+        templateUrl: '/resources/sc/html/header.html',
+      };
+    });
+    angular.module('app').directive('peepingFooter',function(){
+      return {
+        restrict:'AE',
+        templateUrl: '/resources/sc/html/footer.html',
+      };
+    });
 
-    angular.module('app').controller('rootCtrl',['$scope','$location',function($scope,$location){
-
+    angular.module('app').controller('rootCtrl',['$rootScope','$scope','$location','$localStorage','stBlurredDialog',function($rootScope,$scope,$location,$localStorage,stBlurredDialog){
       $scope.isActive = function (path) {
-        console.log('sss',$location.path().substr(-path.length,path.length));
           if(path == '/trending' && $location.path() === '/'){
               return true;
           }
@@ -379,6 +377,13 @@
           } else {
               return false;
           }
+      };
+      $scope.openModal = function(){
+         stBlurredDialog.open('/resources/sc/html/dialogTemplate.html', {msg: 'Hello from the controller!'});
+       };
+      $scope.logout = function(){
+         $localStorage.$reset();
+         $rootScope.user = false;
       };
     }]);
     angular.module('app').controller('DetailCtrl',['$scope','$state','$http',function($scope,$state,$http){
@@ -389,9 +394,6 @@
         }
         $scope.song = data;
         $scope.show=true;
-
-        //console.log(data);
-        //$scope.
       }).then(function(){
         return  $http.get('/tracks/related/'+$state.params.id);
       }).then(function(data){
@@ -416,17 +418,99 @@
       };
     }]);
 
-    angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http','stBlurredDialog', '$q',function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http,stBlurredDialog,$q) {
-        //alert(1);
-        getAllData();
+    angular.module('app').controller('ProfileCtrl',['$scope','$state','$http',function($scope,$state,$http){
+      $http
+      .get('/profile/'+$state.params.id)
+      .then(function(response){
+        $scope.show = true;
+        if(response.data.avatar_url){
+          response.data.avatar_url=response.data.avatar_url.replace(/large.jpg/,'t500x500.jpg');
+        }
+        $scope.profile = response.data;
+        return $http.get('/profile/'+$state.params.id+'/tracks');
+      }).then(function(response){
+        angular.forEach(response.data,function(value,index){
+          if(response.data[index].artwork_url){
+            response.data[index].artwork_url = response.data[index].artwork_url.replace(/large.jpg/,'t500x500.jpg');
+          }
+        });
+        $scope.songs = response.data;
+        console.log('response ddd',response);
+
+      });
+      $scope.showDesc = false;
+      $scope.toggleStatus = "展开";
+      $scope.toggleDesc = function(){
+        if($scope.showDesc){
+          $('.detail-description-container').css('height','40px');
+          $scope.showDesc = false;
+          $scope.toggleStatus = "展开";
+        }else{
+          $('.detail-description-container').css('height','auto');
+          $scope.showDesc = true;
+          $scope.toggleStatus = "折叠";
+        }
+      };
+    }]);
+    angular.module('app').controller('Recommend',['$scope','$http','$localStorage','$rootScope','$state',function($scope,$http,$localStorage,$rootScope,$state){
+      $scope.haveMore = true;
+      $rootScope.show = true;
+      $scope.songs = [];
+      $rootScope.rootShow = true;
+      $scope.page = 0;
+      if($rootScope.user){
+        if($rootScope.user.favorites.length){
+          $scope.page = 0 ;
+          $scope.load = function(){
+            $scope.loading = true;
+            var favorites=$localStorage.user.favorites.slice($scope.page*3,$scope.page*3+3);
+            console.log(favorites);
+            if (favorites.length>0){
+              $http.post('/tracks/recommend',{'favorites':favorites}).then(function(response){
+                angular.forEach(response.data,function(song,index){
+                  if(response.data[index].artwork_url){
+                    response.data[index].artwork_url = response.data[index].artwork_url.replace(/large.jpg/,'t500x500.jpg');
+                  }
+                });
+                angular.forEach(response.data,function(song,index){
+                  $scope.songs.push(song);
+                });
+                $scope.page++;
+                $scope.loading = false;
+                if(response.data.length>=30){
+                  $scope.haveMore = true;
+                }else {
+                  $scope.haveMore = false;
+                }
+              });
+            }else{
+              $scope.loading = false;
+              $scope.haveMore = false;
+            }
+          };
+        }else{
+          $scope.showAlert = true;
+          $scope.alert = '你需要收藏更多的歌曲';
+        }
+      }else{
+        $state.go('index.trending');
+      }
+    }]);
+    angular.module('app').controller('Project', ['AuthenticationService', '$rootScope','$scope', 'dataFactory', '$location', '$stateParams', '$state','$http','stBlurredDialog', '$q','$localStorage',function (AuthenticationService, $rootScope, $scope, dataFactory, $location, $stateParams, $state,$http,stBlurredDialog,$q,$localStorage) {
+        $scope.songs = [];
+        $scope.page = 0;
+        $rootScope.show = true;
+        $scope.haveMore = true;
+        $scope.load = function(){
+          //$scope.busy = true;
+          getAllData();
+        };
         var lastProduct = -1;
         var productsLength = 0;
         $scope.toggleLog = function(){
           $('form').animate({height: 'toggle', opacity: 'toggle'}, 'slow');
         };
-        $scope.openModal = function(){
-           stBlurredDialog.open('/resources/sc/html/dialogTemplate.html', {msg: 'Hello from the controller!'});
-         };
+
         $scope.search = function(){
             $location.path('/search').search({query: this.searchTerm});
         };
@@ -460,20 +544,6 @@
                 });
         };
 
-        $scope.disconnectLastFM = function(){
-            if(AuthenticationService.isLoggedIn){
-                dataFactory.disconnectLastFM()
-                    .success(function (data) {
-                        if (data.success) {
-                            AuthenticationService.SetCredentials(data);
-                        } else {
-                            AuthenticationService.isLoggedIn=0;
-                        }
-                        $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
-                    });
-            }
-        };
-
         $scope.isActive = function (path) {
             if(path == '/trending' && $location.path() === '/'){
                 return true;
@@ -486,12 +556,12 @@
         };
 
         function getAllData() {
+          $scope.loading = true;
             var path=$location.path();
-            console.log('path',path);
             dataFactory
-              .getAllData($location.path(),$stateParams)
+              .getAllData($location.path()+"?page="+$scope.page)
               .success(function (data) {
-                    console.log('data',data);
+                  console.log('data',data);
                     if($location.path().indexOf('favorites')>-1){
                       var promiseArr = [];
                       angular.forEach(data,function(value,index){
@@ -510,17 +580,16 @@
                              song.url= '/play?id='+song.id;
                              data.songs.push(song);
                         });
-
-                        // data.tracks=data.collection;
-                        //data.songs = response;
                         $scope.bindData(data);
                       });
                     }else{
                       $scope.bindData(data);
                     }
-
+                    $scope.loading = false ;
+                    //$scope.busy = true ;
                 })
                 .error(function (error) {
+                  $scope.loading = false ;
                     $scope.status = 'Unable to load data: ' + error.message;
                 });
         }
@@ -542,31 +611,29 @@
               data.songs[index].artwork_url=data.songs[index].artwork_url.replace(/large.jpg/,'t500x500.jpg');
             }
           });
-          $scope.songs = data.songs;
-          console.log('$scope.songs',$scope.songs);
+          angular.forEach(data.songs,function(song,index){
+            $scope.songs.push(song);
+          });
           if(typeof $rootScope.header === 'undefined'){
               $rootScope.header = "Rising.fm | New Music Discovery";
           }
-
-
+          $scope.page++;
           $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
               $rootScope.rootShow = true;
-
-              if(run == 0){
+              //$scope.busy = false;
+              if(run === 0){
                   $('body').append("<script src='/resources/sc/main.js'></script>");
                   run=1;
                   //window.App.init();
               }
               //window.App.openNav();
           });
-        }
+        };
         $scope.reload = function () {
             if($state.current.name === 'index') {
                 $state.go('index', {}, { reload: true });
             }
         };
-
     }]);
-
     //end controller.js
 })();
