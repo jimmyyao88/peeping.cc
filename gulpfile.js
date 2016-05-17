@@ -4,7 +4,21 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
     vendor = require('gulp-concat-vendor'),
-    htmlmin = require('gulp-htmlmin');
+    cleanCSS = require('gulp-clean-css'),
+    htmlmin = require('gulp-htmlmin'),
+    $ = require('gulp-load-plugins')({
+      pattern:[
+        'gulp-*',
+        'del'
+      ]
+    });
+
+gulp.task('css', function() {
+  return gulp.src('www/**/*.css')
+    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(gulp.dest('www/dist'));
+});
+
   gulp.task('lint', function () {
     gulp.src('./*.js')
       .pipe(jshint());
@@ -22,7 +36,7 @@ gulp.task('default', function () {
 });
 
 gulp.task('compress', function() {
-  return gulp.src('www/resources/**/*.js')
+  return gulp.src('www/**/*.js')
     .pipe(uglify())
     .pipe(gulp.dest('www/dist'));
 });
