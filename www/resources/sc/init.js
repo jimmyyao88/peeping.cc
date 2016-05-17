@@ -1,4 +1,4 @@
-angular.module('app', ['app.core', 'ui.router', 'infinite-scroll', 'chart.js', 'ngCookies','angularSoundManager','stBlurredDialog','ngStorage','infinite-scroll'])
+angular.module('app', [ 'ui.router', 'infinite-scroll', 'chart.js', 'ngCookies','angularSoundManager','stBlurredDialog','ngStorage','infinite-scroll'])
     .directive('onFinishRender',['$timeout', function ($timeout) {
         return {
             restrict: 'A',
@@ -20,6 +20,7 @@ angular.module('app', ['app.core', 'ui.router', 'infinite-scroll', 'chart.js', '
         }
     };
 }]);
+
 // end app.js
 
 angular.module('app').run(['$rootScope', '$location', '$window','$localStorage', function($rootScope, $location, $window,$localStorage){
@@ -27,3 +28,7 @@ angular.module('app').run(['$rootScope', '$location', '$window','$localStorage',
     $rootScope.user=$localStorage.user;
   }
 }]);
+
+// angular.module('app',[]).controller('myCtrl',function(){
+//
+// });
