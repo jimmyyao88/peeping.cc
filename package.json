@@ -12,6 +12,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "gulp": "^3.9.1",
+    "gulp-concat-vendor": "0.0.4",
     "gulp-htmlmin": "^2.0.0",
     "gulp-jshint": "^2.0.0",
     "gulp-nodemon": "^2.0.6",

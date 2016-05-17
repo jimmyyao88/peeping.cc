@@ -1,1 +1,0 @@
-angular.module("app").factory("dataFactory",["$http","$rootScope","$state",function(t,e,o){var a={};return FastClick.attach(document.body),a.getAllData=function(o){return console.log("tracks"),console.log(o),e.user?t.get(o,{headers:{access_token:e.user.token}}):t.get(o)},a}]);

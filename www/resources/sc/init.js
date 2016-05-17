@@ -1,4 +1,4 @@
-angular.module('app', [ 'ui.router', 'infinite-scroll', 'chart.js', 'ngCookies','angularSoundManager','stBlurredDialog','ngStorage','infinite-scroll'])
+angular.module('app', [ 'ui.router', 'infinite-scroll','angularSoundManager','stBlurredDialog','ngStorage','infinite-scroll'])
     .directive('onFinishRender',['$timeout', function ($timeout) {
         return {
             restrict: 'A',
