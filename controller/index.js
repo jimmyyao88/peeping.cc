@@ -21,8 +21,6 @@ exports.getTrend=function(req,res){
             song.url= '/play?id='+song.id;
             data.songs.push(song);
         });
-        console.log(data.songs);
-        console.log('here');
         data.tracks=data.collection;
 
         res.send(data);
@@ -168,7 +166,6 @@ exports.getElectronic=function(req,res){
         });
         console.log(data.songs);
         data.tracks=data.collection;
-
         res.send(data);
     },function(err){
       console.log(err);
@@ -189,8 +186,6 @@ exports.getElectronic=function(req,res){
             data.songs.push(song.track);
         });
         data.tracks=data.collection;
-
-        //data.songs=data.collection;
         res.send(data);
     },function(err){
       console.log(err);
@@ -267,9 +262,7 @@ exports.getPop=function(req,res){
             song.url= '/play?id='+song.id;
             data.songs.push(song);
         });
-        console.log(data.songs);
         data.tracks=data.collection;
-
         res.send(data);
     },function(err){
       console.log(err);
@@ -320,7 +313,6 @@ exports.getNew=function(req,res){
         });
         console.log(data.songs);
         data.tracks=data.collection;
-
         res.send(data);
     },function(err){
       console.log(err);

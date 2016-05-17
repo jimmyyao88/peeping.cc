@@ -44,6 +44,6 @@ module.exports=function(app){
 
    /**favorites**/
    app.post('/favorite/save',User.validToken,User.saveFavorite);
-   app.get('/tracks/favorites',User.validToken,User.getFavorites);
+   app.get('/charts/favorites',User.validToken,User.getFavorites);
 
 };

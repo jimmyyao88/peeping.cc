@@ -1,14 +1,10 @@
-angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', function($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
+angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider',function($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
     //
     $httpProvider.defaults.withCredentials = true;
-
     //$locationProvider.html5Mode(false);
-    if($rootScope.user){
-      $urlRouterProvider.otherwise("/charts/recomend");
-    }else{
-      $urlRouterProvider.otherwise("/charts/trending");
-    }
     //
+    $urlRouterProvider.otherwise("/charts/trending");
+
     // Now set up the states
     $stateProvider
         .state('index', {
@@ -133,6 +129,11 @@ angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProv
           templateUrl: '/resources/sc/html/profile.html',
           controller: 'ProfileCtrl'
         })
+        .state('index.search', {
+            url: "/search?query={search}",
+            templateUrl: '/resources/sc/html/tiles.html',
+            controller: 'SearchCtrl'
+        })
         .state('lastfm', {
             url: "/lastfm",
             templateUrl: '/resources/sc/html/main_static.html',
@@ -157,11 +158,6 @@ angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProv
             url: "/join?_escaped_fragment_",
             templateUrl: '/resources/sc/html/join_static.html',
             controller: 'JoinController'
-        })
-        .state('search', {
-            url: "/search?query={search}",
-            templateUrl: '/resources/sc/html/main_static.html',
-            controller: 'Project'
         })
         .state('track', {
             url: "/track/{trackname}?_escaped_fragment_",

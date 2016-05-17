@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-cloak class="ng-cloak js-nav">
+<head>
+    <meta name="fragment" content="!">
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="viewport" content="width=device-width">
+    <meta name="fragment" content="!" />
+    <!-- <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="user-scalable=no"> -->
+    <base href="/">
+    <meta name="og:title" content="{{header}}">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="full-screen" content="yes">
+    <title>Peeping.cc - 和世界一起分享音乐</title>
+    <link href="http://fonts.useso.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="/logos/astronaut-ios.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+    <!-- <link rel="icon" type="image/png" href="/logos/favicon.ico"> -->
+</head>
+<body ontouchstart="">
+<div class="loadingScreen" ng-show="!isLoaded">
+  <img src="/logos/loader.gif">
+</div>
+<div id="outer-wrap" ng-show="isLoaded" >
+  <st-blurred-dialog-overlay></st-blurred-dialog-overlay>
+  <div id="inner-wrap" st-blurred-dialog-region>
+       <div ui-view="header"></div>
+      <div></div>
+      <div id="main" role="main">
+          <div class="content-container">
+              <div ui-view="progress"></div>
+              <div ui-view="main"></div>
+          </div>
+      </div>
+      <div ui-view="footer"></div>
+  </div>
+</div>
+<sound-manager></sound-manager>
+
+</body>
+<script src="/resources/theme1/js/jquery-2.2.0.min.js"></script>
+<script src="/resources/theme1/js/bootstrap.min.js"></script>
+<script src="/resources/theme1/js/angular.min.js"></script>
+<script src="/resources/theme1/js/angular-ui-router.min.js"></script>
+<script src="/resources/theme1/js/ng-infinite-scroll.min.js"></script>
+<script src="/resources/theme1/js/ngStorage.min.js"></script>
+<script src="/resources/theme1/js/angular-blurred-modal.js"></script>
+<script src="/resources/theme1/js/bootstrap.min.js"></script>
+<script src="/resources/theme1/js/Chart.min.js"></script>
+<script src="/resources/theme1/js/angular-chart.min.js"></script>
+<script src="/resources/theme1/js/angular-cookies.js"></script>
+<script src="/resources/sc/fastclick.js"></script>
+<script src="/resources/sc/md5.js"></script>
+<script src="/resources/sc/soundmanager2.js"></script>
+<script src="/resources/sc/init.js"></script>
+<script src="/resources/sc/service/dataFactory.js"></script>
+<script src="/resources/sc/app.js"></script>
+<script src="/resources/sc/routes/routes.js"></script>
+
+
+<!-- <script src="/resources/theme1/js/webslidemenu.js"></script> -->
+<link href="/resources/sc/mycss.css" rel="stylesheet">
+<link href="/resources/sc/mycss2.css" rel="stylesheet">
+<link href="/resources/theme1/css/font-awesome.min.css" rel="stylesheet">
+<style type="text/css">.fancybox-margin{margin-right:17px;}</style>
+</html>
