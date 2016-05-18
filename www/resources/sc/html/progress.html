@@ -1,9 +1,4 @@
 <div class="progress-bar-container-fixed">
-    <!-- <ul>
-       <li ng-repeat="song in songs">
-           <button music-player="play" add-song="song" play-pause-toggle>{{ song.title }}</button>
-       </li>
-    </ul> -->
     <div class="progress-bar-container">
         <div class="buttons-container">
             <div ng-hide="hideButtons == true" class="progress-bar-shuffle-container"><div class="progress-bar-shuffle-button" ng-class="[{true:'shuffle'}[shuffle]]"></div></div>
@@ -11,7 +6,7 @@
             <div class="progress-bar-play-container" ng-class="[{true:'playing'}[playing]]" play-pause-toggle data-play="<i></i>" data-pause="<span></span>"><div class="progress-bar-play-button"></div></div>
             <div ng-hide="hideButtons == true" class="progress-bar-previous-container" prev-track><div class="progress-bar-previous-button"></div></div>
             <div class="progress-bar-favorite-container" ng-click="favorite(id, index)"><div class="{{'progress-bar-favorite-button progress' + tracks[index].favorited}}"></div></div>
-            <div class="progress-bar-soundcloud-container"><a target="_blank" href="{{permalink_url}}" class="progress-bar-soundcloud-button"><img class="soundcloud-logo" src="https://w.soundcloud.com/icon/assets/images/white_transparent_64-94fc761.png"/></a></div>
+            <div class="progress-bar-soundcloud-container"><a target="_blank" href="{{permalink_url}}" class="progress-bar-soundcloud-button"><img class="soundcloud-logo" src="/images/white_transparent_64-94fc761.png"/></a></div>
             <div class="progress-bar-volume-slider-container">
                 <div class="progress-bar-volume-slider-overlay-relative-container">
                     <div class="progress-bar-volume-slider-overlay-absolute-container">
@@ -33,7 +28,7 @@
             <div class="seekLoad" ng-style="{width : ( progress + '%' ) }"></div>
         </div> -->
         <div class="track-name-container">
-            <div class="progress-track-container"><div class="progress-track">{{currentPlaying.title}}</div></div>
+            <div class="progress-track-container"><div class="progress-track"><a href="#/charts/detail/{{currentPlaying.id}}" >{{currentPlaying.title}}</a></div></div>
         </div>
     </div>
 

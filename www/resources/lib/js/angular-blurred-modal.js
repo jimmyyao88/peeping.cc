@@ -65,7 +65,7 @@ angular.module("stBlurredDialog",[])
 			restrict: "E",
 			replace: true,
 			template: 	"<div ng-if='model.isOpen' class='st-blurred-region-overlay'>" +
-						"<div style='text-align:right;'><button ng-click='close()' class='st-blurred-region-close'>&#10006;</button></div>" +
+						"<div style='text-align:right;'><button ng-click='close()' class='st-blurred-region-close'>x</button></div>" +
 					  	"<div ng-include src='model.pathToTemplate'></p>" +
 						"</div>",
 			controller: ['$scope', 'stBlurredDialog', '$element', function($scope, stBlurredDialog, $element){

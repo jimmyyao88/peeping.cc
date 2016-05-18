@@ -153,6 +153,12 @@ textarea {
     margin: 0;
 }
 
+input[type='text'],
+input[type='number'],
+textarea {
+  font-size: 16px;
+}
+
 button,
 input {
     line-height: normal;
@@ -390,7 +396,7 @@ a {
     align-items: center;
     left: 0;
     top: 0px;
-    box-shadow: 0px 2px 5px #313131;
+    box-shadow: 0px 2px 5px #000;
 }
 #top .block-title {
     margin: 0;

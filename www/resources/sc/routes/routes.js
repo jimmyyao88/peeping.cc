@@ -3,7 +3,7 @@ angular.module('app').config(['$httpProvider', '$stateProvider', '$urlRouterProv
     $httpProvider.defaults.withCredentials = true;
     //$locationProvider.html5Mode(false);
     //
-    $urlRouterProvider.otherwise("/charts/trending");
+    $urlRouterProvider.otherwise("/charts/trap");
 
     // Now set up the states
     $stateProvider

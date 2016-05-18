@@ -2,7 +2,7 @@
     <div ng-if="showAlert" class="show-alert">{{alert}}</div>
     <div ng-repeat="song in songs" on-finish-render="ngRepeatFinished" class="tile" >
         <div class="track" id="{{song.id}}" data-index="{{$index+1}}">
-            <img src="{{song.artwork_url}}" class="tile-artwork">
+            <img src="{{song.artwork_url}}" class="tile-artwork tile-artwork-height">
             <div class="info-container">
                 <div class="track-info">
                     <div class="track-number">
@@ -27,7 +27,7 @@
             </div>
             <div class="play-container" play-pause-toggle data-play="" data-pause="" ng-if="currentPlaying.id == song.id&&!firstClick"></div>
             <div class="track-icons">
-                <a class="soundcloud-link" target="_blank" href="{{song.permalink_url}}"><img class="soundcloud-logo"  src="https://w.soundcloud.com/icon/assets/images/orange_transparent_64-94fc761.png"/></a>
+                <a class="soundcloud-link" target="_blank" href="{{song.permalink_url}}"><img class="soundcloud-logo"  src="/images/white_transparent_64-94fc761.png"/></a>
             </div>
         </div>
     </div>

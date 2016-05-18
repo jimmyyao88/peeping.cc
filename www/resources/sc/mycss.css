@@ -73,6 +73,12 @@ body{
 .tile-artwork{
     width: 100%;
 }
+.tile-artwork:before{
+  content:'';
+   padding:50% 0;
+   display:inline-block;
+
+}
 .info-container{
     width: 100%;
     position: relative;
