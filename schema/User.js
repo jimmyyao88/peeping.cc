@@ -60,7 +60,7 @@ UserSchema.methods={
                 return cb(err);
             }
             cb(null,isMatch);
-        })
+        });
     }
 };
 UserSchema.statics={
@@ -68,12 +68,12 @@ UserSchema.statics={
         return this
             .find({})
             .sort('meta.updateAt')
-            .exec(cb)
+            .exec(cb);
     },
     findById:function(id,cb){
         return this
             .findOne({_id:id})
-            .exec(cb)
+            .exec(cb);
     }
 };
 

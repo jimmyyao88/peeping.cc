@@ -21,7 +21,7 @@
                   <a href="#" ng-if="!user" ng-click="openModal()"><li>登陆/注册</li></a>
                   <a href="#" ng-if="user"><li>{{user.nickname}}</li></a>
                   <a href="#" ng-if="user" ng-click="logout()"><li>退出</li></a>
-                  <a href="#/charts/favorites"><li>收藏</li></a>
+                  <a href="#/charts/favorites" ng-if="user"><li>收藏</li></a>
                   <a href="http://www.jimmyyao.me" target="_blank"><li class="about">made with ❤ by <i style="color:#eee">Jimmy</i> </li></a>
                 </ul>
               </div>

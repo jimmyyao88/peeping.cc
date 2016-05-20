@@ -51,9 +51,25 @@
               <div class="play-container" play-pause-toggle data-play="" data-pause="" ng-if="currentPlaying.id == song.id&&!firstClick"></div>
               </div>
               <div class="track-icons">
-                  <a class="soundcloud-link" target="_blank" href="{{song.permalink_url}}"><img class="soundcloud-logo"  src="https://w.soundcloud.com/icon/assets/images/orange_transparent_64-94fc761.png"/></a>
+                  <a class="soundcloud-link" target="_blank" href="{{song.permalink_url}}"><img class="soundcloud-logo"  src="/images/white_transparent_64-94fc761.png"/></a>
               </div>
           </div>
       </div>
     </div>
+    <!-- <div class="related-song">
+      <p class="related-song-title title">相关推荐</p>
+      <ul class="related-song-list">
+        <li ng-repeat="song in relatedSongs">
+          <a class="related-song-container" href="#/charts/detail/{{song.id}}">
+            <div class="related-artwork">
+              <img src="{{song.artwork_url}}">
+            </div>
+            <div class="related-detail">
+              <div class="related-detail-title">{{song.title}}</div>
+              <div class="related-detail-username">{{song.user.username}}</div>
+            </div>
+            </a>
+        </li>
+      </ul>
+    </div> -->
 </div>

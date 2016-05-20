@@ -818,7 +818,9 @@ exports.getRawLink=function(req,res){
     console.log('response');
     //var data=JSON.parse(response.headers);
     console.log(response);
-    res.redirect(response.headers.location);
+    // res.status(303).send(response.headers.location);
+    res.redirect(303,response.headers.location);
+    // res.redirect(response.headers.location);
     //res.send({'link':response.headers.location});
   });
 };
