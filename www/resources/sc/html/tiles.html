@@ -24,6 +24,7 @@
             <div class="play-container" music-player="play" add-song="song" ng-if="currentPlaying.id != song.id"></div>
             <div class="play-container" ng-if="currentPlaying.id == song.id">
               <div class="play-pause" play-pause-toggle="" data-play="<i></i>" data-pause="<span></span>"><i></i></div>
+              <!-- <p class="hint" ng-if="wall">此歌曲由于版权问题只能收听30秒</p> -->
             </div>
             <div class="play-container" play-pause-toggle data-play="" data-pause="" ng-if="currentPlaying.id == song.id&&!firstClick"></div>
             <div class="track-icons">

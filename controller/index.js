@@ -815,12 +815,20 @@ exports.getRawLink=function(req,res){
       // var data=JSON.parse(response.headers);
       // res.send({'link':data.location});
   },function(response){
-    console.log('response');
+
     //var data=JSON.parse(response.headers);
-    console.log(response);
+
     // res.status(303).send(response.headers.location);
-    res.redirect(303,response.headers.location);
-    // res.redirect(response.headers.location);
-    //res.send({'link':response.headers.location});
+    if(response.headers.location.indexOf('ec-media.sndcdn.com/')!=-1){
+      requestify
+      .get('https://api.soundcloud.com/i1/tracks/'+id+'/streams?client_id='+client_id)
+      .then(function(data){
+        var preview = JSON.parse(data.body);
+        res.redirect(preview.preview_mp3_128_url);
+      });
+    }else{
+
+      res.redirect(response.headers.location);
+    }
   });
 };
