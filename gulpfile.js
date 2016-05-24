@@ -48,13 +48,13 @@ gulp.task('scripts', function() {
 });
 
 
-gulp.task('minify', function() {
+gulp.task('html', function() {
   return gulp.src('www/**/*.html')
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('www/dist'));
 });
 
-
+gulp.task('build',['compress','html','css']);
 // gulp.task('compress', function() {
 //   return gulp.src('www/dist/vendor.js')
 //     .pipe(uglify())

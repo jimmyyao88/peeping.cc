@@ -1,0 +1,16 @@
+<div class="tracks-container detail-container detail" ng-show="show"><div class="tile"><div class="track" id="{{profile.id}}" data-index="{{$index+1}}"><img src="{{profile.avatar_url}}" class="tile-artwork"><div class="info-container"><div class="track-info"><div class="track-artist">{{profile.username}}</div></div></div></div></div><div class="detail-description"><p class="detail-description-title title">详细信息</p><div class="detail-description-container">{{profile.description}}</div><div class="detail-description-more"><button class="btn-transparent btn-showmore" ng-click="toggleDesc()">{{toggleStatus}}</button></div></div><div class="cb"></div><div><p class="detail-description-title title title-left">歌曲</p><div ng-repeat="song in songs" on-finish-render="ngRepeatFinished" class="tile"><div class="track" id="{{song.id}}" data-index="{{$index+1}}"><img src="{{song.artwork_url}}" class="tile-artwork"><div class="info-container"><div class="track-info"><div class="track-number"><!-- {{($index+1) > 9 ? ($index+1): "0" + ($index+1)}} --> <img src="{{song.user.avatar_url}}" width="20" height="20"></div><div class="track-artist">{{song.user.username}}</div><div class="track-name"><a id="track-name" href="#/charts/detail/{{song.id}}">{{song.title}}</a></div><div id="favorite-track" class="{{'favorite-track ' + song.favorited}}" ng-click="favorite(song.id, $index)"></div></div></div><div class="overlay"></div><div class="play-container" music-player="play" add-song="song" ng-if="currentPlaying.id != song.id"></div><div class="play-container" ng-if="currentPlaying.id == song.id"><div class="play-pause" play-pause-toggle="" data-play="<i></i>" data-pause="<span></span>"><i></i></div></div><div class="play-container" play-pause-toggle data-play="" data-pause="" ng-if="currentPlaying.id == song.id&&!firstClick"></div></div><div class="track-icons"><a class="soundcloud-link" target="_blank" href="{{song.permalink_url}}"><img class="soundcloud-logo" src="/images/white_transparent_64-94fc761.png"></a></div></div></div></div><!-- <div class="related-song">
+      <p class="related-song-title title">相关推荐</p>
+      <ul class="related-song-list">
+        <li ng-repeat="song in relatedSongs">
+          <a class="related-song-container" href="#/charts/detail/{{song.id}}">
+            <div class="related-artwork">
+              <img src="{{song.artwork_url}}">
+            </div>
+            <div class="related-detail">
+              <div class="related-detail-title">{{song.title}}</div>
+              <div class="related-detail-username">{{song.user.username}}</div>
+            </div>
+            </a>
+        </li>
+      </ul>
+    </div> -->

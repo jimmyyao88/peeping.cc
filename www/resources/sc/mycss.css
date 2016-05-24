@@ -95,7 +95,7 @@ body {
     letter-spacing: -1px;
     height: 40px;
     position: absolute;
-    bottom: 4px;
+    bottom: 3px;
     text-shadow: 1px 1px 2px #000;
     color: #fff;
     overflow: hidden
@@ -124,6 +124,14 @@ body {
 
 .track-name,.track-name a {
     color: #d4d4d4
+}
+
+.track-name a {
+    width: 78%;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .track-name {
