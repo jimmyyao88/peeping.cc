@@ -163,31 +163,6 @@
                $scope.loading = false;
                $scope.haveMore = false;
              }
-            // var favorites=$localStorage.user.favorites.slice($scope.page*3,$scope.page*3+3);
-            // console.log(favorites);
-            // if (favorites.length>0){
-            //
-            //   $http.get('/tracks/recommend',{'favorites':favorites}).then(function(response){
-            //     angular.forEach(response.data,function(song,index){
-            //       if(response.data[index].artwork_url){
-            //         response.data[index].artwork_url = response.data[index].artwork_url.replace(/large.jpg/,'t500x500.jpg');
-            //       }
-            //     });
-            //     angular.forEach(response.data,function(song,index){
-            //       $scope.songs.push(song);
-            //     });
-            //     $scope.page++;
-            //     $scope.loading = false;
-            //     if(response.data.length>=30){
-            //       $scope.haveMore = true;
-            //     }else {
-            //       $scope.haveMore = false;
-            //     }
-            //   });
-            // }else{
-            //   $scope.loading = false;
-            //   $scope.haveMore = false;
-            // }
           };
     }]);
     angular.module('app').controller('ProfileCtrl',['$scope','$state','$http','$rootScope',function($scope,$state,$http,$rootScope){
@@ -274,6 +249,7 @@
         $scope.page = 0;
         $rootScope.show = true;
         $scope.haveMore = true;
+
         if(!init){
           $('.music-nav').find('li').removeClass('is-active');
           init = false;
@@ -346,11 +322,10 @@
               .getAllData($location.path()+"?page="+$scope.page)
               .success(function (data) {
                 $rootScope.isLoaded = true;
-                  console.log('data',data);
                     if($location.path().indexOf('favorites')>-1){
                       var promiseArr = [];
                       angular.forEach(data,function(value,index){
-                        var promise = $http.get('/track?id='+value).then(function(response){
+                        var promise = $http.get('/track/'+value).then(function(response){
                           return response.data;
                         });
                         promiseArr.push(promise);

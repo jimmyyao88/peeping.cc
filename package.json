@@ -11,6 +11,7 @@
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "fs": "0.0.2",
     "gulp": "^3.9.1",
     "gulp-concat-vendor": "0.0.4",
     "gulp-htmlmin": "^2.0.0",

@@ -2,6 +2,7 @@ var requestify=require('requestify');
 var request = require('request');
 var client_id = 'a3e059563d7fd3372b49b37f00a00bcf';
 var limitOffset = 32;
+var fs = require('fs');
 
 exports.getTrend=function(req,res){
   var page = req.query.page ;
@@ -807,36 +808,16 @@ exports.getRelatedTracks = function(req,res){
 };
 
 exports.getRawLink=function(req,res){
-  console.log(req.query);
   var id = req.query.id;
   requestify
    .head('http://api.soundcloud.com/tracks/'+id+'/stream?client_id='+client_id)
    .then(function(response){
-      // var data=JSON.parse(response.headers);
-      // res.send({'link':data.location});
   },function(response){
-
     //var data=JSON.parse(response.headers);
-
     // res.status(303).send(response.headers.location);
-    console.log('response.headers',response.headers);
-    if(response.headers.location.indexOf('ec-media.sndcdn.com/')!=-1){
-      requestify
-      .get('https://api.soundcloud.com/i1/tracks/'+id+'/streams?client_id='+client_id)
-      .then(function(data){
-        var preview = JSON.parse(data.body);
-        requestify.get(preview.preview_mp3_128_url).then(function(response){
-          //console.log('response song',response);
-          console.log('xix');
-          console.log(response.headers.date);
-          //console.log('response song' , parsedJson.date);
 
-          res.send(response.body);
-        },function(response){
-          console.log('error',response);
-        });
-        //res.redirect(preview.preview_mp3_128_url);
-      });
+    if(response.headers.location.indexOf('ec-media.sndcdn.com/')!=-1){
+      request(response.headers.location).pipe(res);
     }else{
       res.redirect(response.headers.location);
     }

@@ -31,6 +31,7 @@ module.exports=function(app){
    app.get('/profile/:id',Profile.getProfile);
    app.get('/profile/:id/tracks',Profile.getProfileTracks);
    /**track**/
+
    app.get('/track/:id',Index.getTrackInfo);
    app.get('/tracks/related/:id',Index.getRelatedTracks);
    /**search**/

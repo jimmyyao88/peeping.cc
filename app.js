@@ -24,10 +24,9 @@ app.use(session({
 }));
 app.set('jwtTokenSecret', 'PEEPING_TOKEN');
 //app.use(express.static(path.join(__dirname,'www/')));
-app.use(express.static(path.join(__dirname,'www/')));
+app.use(express.static(path.join(__dirname,'www/dist')));
 app.use(cookieParser());
 app.use(multiPart());
-
 
 
 console.log('server start');
